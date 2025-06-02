@@ -93,10 +93,8 @@ export const DEFAULT_MS_BEFORE_WARNING = ONE_MINUTE_MS * 10
  */
 function getOverriddenRpcUrls(
   defaultRpcUrls: Partial<{ [key in RPCType]: { http: string[] } }>,
-  envVarName: string
+  envRpcUrl: string
 ): { [key in RPCType]: { http: string[] } } {
-  const envRpcUrl = process.env[`REACT_APP_${envVarName}`] || process.env[envVarName]
-  
   if (!envRpcUrl) {
     return defaultRpcUrls as { [key in RPCType]: { http: string[] } }
   }
@@ -242,7 +240,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
               getQuicknodeEndpointUrl(UniverseChainId.Mainnet),
             ],
           },
-        }, 'ETHEREUM_RPC_URL'),
+        }, config.ethereumRpcUrl),
     urlParam: 'ethereum',
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC, 100_000e6),
@@ -312,7 +310,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
         ],
       },
       [RPCType.PublicAlt]: { http: ['https://arb1.arbitrum.io/rpc'] },
-    }, 'ARBITRUM_RPC_URL'),
+    }, config.arbitrumRpcUrl),
     wrappedNativeCurrency: {
       name: 'Wrapped Ether',
       symbol: 'WETH',
@@ -361,7 +359,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Avalanche)] },
       [RPCType.Default]: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
       [RPCType.Interface]: { http: [`https://avalanche-mainnet.infura.io/v3/${config.infuraKey}`] },
-    }, 'AVALANCHE_RPC_URL'),
+    }, config.avalancheRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_AVALANCHE, 10_000e6),
     stablecoins: [USDC_AVALANCHE],
     statusPage: undefined,
@@ -423,7 +421,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
           [RPCType.Default]: { http: ['https://mainnet.base.org/'] },
           [RPCType.Fallback]: { http: ['https://1rpc.io/base', 'https://base.meowrpc.com'] },
           [RPCType.Interface]: { http: [`https://base-mainnet.infura.io/v3/${config.infuraKey}`] },
-        }, 'BASE_RPC_URL'),
+        }, config.baseRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_BASE, 10_000e6),
     assetRepoNetworkName: 'base',
     stablecoins: [USDC_BASE],
@@ -482,7 +480,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Blast)] },
       [RPCType.Default]: { http: ['https://rpc.blast.io/'] },
       [RPCType.Interface]: { http: [`https://blast-mainnet.infura.io/v3/${config.infuraKey}`] },
-    }, 'BLAST_RPC_URL'),
+    }, config.blastRpcUrl),
     wrappedNativeCurrency: {
       name: 'Wrapped Ether',
       symbol: 'WETH',
@@ -531,7 +529,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Bnb)] },
       [RPCType.Default]: { http: ['https://bsc-dataseed1.bnbchain.org'] },
       [RPCType.Interface]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Bnb)] },
-    }, 'BNB_RPC_URL'),
+    }, config.bnbRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_BNB, 100e18),
     stablecoins: [USDC_BNB],
     statusPage: undefined,
@@ -594,7 +592,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Celo)] },
       [RPCType.Default]: { http: [`https://forno.celo.org`] },
       [RPCType.Interface]: { http: [`https://celo-mainnet.infura.io/v3/${config.infuraKey}`] },
-    }, 'CELO_RPC_URL'),
+    }, config.celoRpcUrl),
     wrappedNativeCurrency: {
       name: 'Celo',
       symbol: 'CELO',
@@ -643,7 +641,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Interface]: {
         http: [getQuicknodeEndpointUrl(UniverseChainId.MonadTestnet)],
       },
-    }, 'MONAD_TESTNET_RPC_URL'),
+    }, config.monadTestnetRpcUrl),
     wrappedNativeCurrency: {
       name: 'Wrapped Monad',
       symbol: 'WMON',
@@ -706,7 +704,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Default]: { http: ['https://mainnet.optimism.io/'] },
       [RPCType.Fallback]: { http: ['https://rpc.ankr.com/optimism'] },
       [RPCType.Interface]: { http: [`https://optimism-mainnet.infura.io/v3/${config.infuraKey}`] },
-    }, 'OPTIMISM_RPC_URL'),
+    }, config.optimismRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_OPTIMISM, 10_000e6),
     stablecoins: [USDC_OPTIMISM, DAI_OPTIMISM],
     statusPage: 'https://optimism.io/status',
@@ -763,7 +761,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.PublicAlt]: { http: ['https://polygon-rpc.com/'] },
       [RPCType.Default]: { http: ['https://polygon-rpc.com/'] },
       [RPCType.Interface]: { http: [`https://polygon-mainnet.infura.io/v3/${config.infuraKey}`] },
-    }, 'POLYGON_RPC_URL'),
+    }, config.polygonRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_POLYGON, 10_000e6),
     stablecoins: [USDC_POLYGON, DAI_POLYGON],
     statusPage: undefined,
@@ -833,7 +831,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
         ],
       },
       [RPCType.Interface]: { http: [`https://sepolia.infura.io/v3/${config.infuraKey}`] },
-    }, 'SEPOLIA_RPC_URL'),
+    }, config.sepoliaRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_SEPOLIA, 100e6),
     stablecoins: [USDC_SEPOLIA],
     statusPage: undefined,
@@ -884,12 +882,12 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: DEFAULT_RETRY_OPTIONS,
-    rpcUrls: {
+    rpcUrls: getOverriddenRpcUrls({
       // TODO (WEB-6702) - update public rpc to quicknode url when available
       [RPCType.Public]: { http: [`https://soneium-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`] },
       [RPCType.Default]: { http: ['https://rpc.soneium.org'] },
       [RPCType.Interface]: { http: [`https://soneium-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`] },
-    },
+    }, config.soneiumRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_SONEIUM, 10_000e6),
     stablecoins: [USDC_SONEIUM],
     statusPage: 'https://status.soneium.org/',
@@ -905,7 +903,6 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
   } as const satisfies UniverseChainInfo,
   [UniverseChainId.Unichain]: {
-    // ...unichain, // TODO update once available from viem
     name: 'Unichain',
     id: UniverseChainId.Unichain,
     sdkId: UniswapSDKChainId.UNICHAIN,
@@ -940,11 +937,11 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
-    rpcUrls: {
+    rpcUrls: getOverriddenRpcUrls({
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Unichain)] },
       [RPCType.Default]: { http: ['https://mainnet.unichain.org'] },
       [RPCType.Interface]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Unichain)] },
-    },
+    }, config.unichainRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_UNICHAIN, 10_000e6),
     stablecoins: [USDC_UNICHAIN],
     statusPage: undefined,
@@ -996,7 +993,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
-    rpcUrls: {
+    rpcUrls: getOverriddenRpcUrls({
       [RPCType.Public]: {
         http: [getQuicknodeEndpointUrl(UniverseChainId.UnichainSepolia)],
       },
@@ -1006,7 +1003,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Interface]: {
         http: [getQuicknodeEndpointUrl(UniverseChainId.UnichainSepolia)],
       },
-    },
+    }, config.unichainSepoliaRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_UNICHAIN_SEPOLIA, 10_000e6),
     stablecoins: [USDC_UNICHAIN_SEPOLIA],
     statusPage: undefined,
@@ -1057,7 +1054,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
-    rpcUrls: {
+    rpcUrls: getOverriddenRpcUrls({
       [RPCType.Public]: {
         http: [getQuicknodeEndpointUrl(UniverseChainId.WorldChain)],
       },
@@ -1065,7 +1062,7 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       [RPCType.Interface]: {
         http: [getQuicknodeEndpointUrl(UniverseChainId.WorldChain)],
       },
-    },
+    }, config.worldchainRpcUrl),
     urlParam: 'worldchain',
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_WORLD_CHAIN, 10_000e6),
@@ -1116,11 +1113,11 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
     },
     networkLayer: NetworkLayer.L2,
     pendingTransactionsRetryOptions: undefined,
-    rpcUrls: {
+    rpcUrls: getOverriddenRpcUrls({
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Zksync)] },
       [RPCType.Default]: { http: ['https://mainnet.era.zksync.io/'] },
       [RPCType.Interface]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Zksync)] },
-    },
+    }, config.zksyncRpcUrl),
     urlParam: 'zksync',
     statusPage: undefined,
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_ZKSYNC, 10_000e6),
@@ -1170,11 +1167,11 @@ export const UNIVERSE_CHAIN_INFO: Record<UniverseChainId, UniverseChainInfo> = {
       logo: ETH_LOGO,
     },
     pendingTransactionsRetryOptions: undefined,
-    rpcUrls: {
+    rpcUrls: getOverriddenRpcUrls({
       [RPCType.Public]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Zora)] },
       [RPCType.Default]: { http: ['https://rpc.zora.energy/'] },
       [RPCType.Interface]: { http: [getQuicknodeEndpointUrl(UniverseChainId.Zora)] },
-    },
+    }, config.zoraRpcUrl),
     spotPriceStablecoinAmount: CurrencyAmount.fromRawAmount(USDC_ZORA, 10_000e6),
     stablecoins: [USDC_ZORA],
     statusPage: undefined,

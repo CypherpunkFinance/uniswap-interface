@@ -67,6 +67,24 @@ export interface Config {
   walletConnectProjectId: string
   walletConnectProjectIdBeta: string
   walletConnectProjectIdDev: string
+  // RPC URL overrides
+  ethereumRpcUrl: string
+  arbitrumRpcUrl: string
+  avalancheRpcUrl: string
+  baseRpcUrl: string
+  blastRpcUrl: string
+  bnbRpcUrl: string
+  celoRpcUrl: string
+  monadTestnetRpcUrl: string
+  optimismRpcUrl: string
+  polygonRpcUrl: string
+  sepoliaRpcUrl: string
+  soneiumRpcUrl: string
+  unichainRpcUrl: string
+  unichainSepoliaRpcUrl: string
+  worldchainRpcUrl: string
+  zksyncRpcUrl: string
+  zoraRpcUrl: string
 }
 
 /**
@@ -112,6 +130,23 @@ const _config: Config = {
     process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID || process.env.WALLETCONNECT_PROJECT_ID || WALLETCONNECT_PROJECT_ID,
   walletConnectProjectIdBeta: process.env.WALLETCONNECT_PROJECT_ID_BETA || WALLETCONNECT_PROJECT_ID_BETA,
   walletConnectProjectIdDev: process.env.WALLETCONNECT_PROJECT_ID_DEV || WALLETCONNECT_PROJECT_ID_DEV,
+  ethereumRpcUrl: process.env.REACT_APP_ETHEREUM_RPC_URL || process.env.ETHEREUM_RPC_URL || '',
+  arbitrumRpcUrl: process.env.REACT_APP_ARBITRUM_RPC_URL || process.env.ARBITRUM_RPC_URL || '',
+  avalancheRpcUrl: process.env.REACT_APP_AVALANCHE_RPC_URL || process.env.AVALANCHE_RPC_URL || '',
+  baseRpcUrl: process.env.REACT_APP_BASE_RPC_URL || process.env.BASE_RPC_URL || '',
+  blastRpcUrl: process.env.REACT_APP_BLAST_RPC_URL || process.env.BLAST_RPC_URL || '',
+  bnbRpcUrl: process.env.REACT_APP_BNB_RPC_URL || process.env.BNB_RPC_URL || '',
+  celoRpcUrl: process.env.REACT_APP_CELO_RPC_URL || process.env.CELO_RPC_URL || '',
+  monadTestnetRpcUrl: process.env.REACT_APP_MONAD_TESTNET_RPC_URL || process.env.MONAD_TESTNET_RPC_URL || '',
+  optimismRpcUrl: process.env.REACT_APP_OPTIMISM_RPC_URL || process.env.OPTIMISM_RPC_URL || '',
+  polygonRpcUrl: process.env.REACT_APP_POLYGON_RPC_URL || process.env.POLYGON_RPC_URL || '',
+  sepoliaRpcUrl: process.env.REACT_APP_SEPOLIA_RPC_URL || process.env.SEPOLIA_RPC_URL || '',
+  soneiumRpcUrl: process.env.REACT_APP_SONEIUM_RPC_URL || process.env.SONEIUM_RPC_URL || '',
+  unichainRpcUrl: process.env.REACT_APP_UNICHAIN_RPC_URL || process.env.UNICHAIN_RPC_URL || '',
+  unichainSepoliaRpcUrl: process.env.REACT_APP_UNICHAIN_SEPOLIA_RPC_URL || process.env.UNICHAIN_SEPOLIA_RPC_URL || '',
+  worldchainRpcUrl: process.env.REACT_APP_WORLDCHAIN_RPC_URL || process.env.WORLDCHAIN_RPC_URL || '',
+  zksyncRpcUrl: process.env.REACT_APP_ZKSYNC_RPC_URL || process.env.ZKSYNC_RPC_URL || '',
+  zoraRpcUrl: process.env.REACT_APP_ZORA_RPC_URL || process.env.ZORA_RPC_URL || '',
 }
 
 export const config = Object.freeze(_config)
